@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using FSTemplate.Sample.Models;
 using System.Web.Mvc;
 
 namespace FSTemplate.Sample.Controllers
@@ -10,7 +7,12 @@ namespace FSTemplate.Sample.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new IndexModel
+            {
+                Name = "Hello World",
+                Values = new[] { 0, 1, 2, 3, 4 }
+            };
+            return View(model);
         }
 
         public ActionResult About()

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Web.Mvc;
-using FSTemplate;
 
 namespace FSTemplate.Mvc
 {
@@ -17,9 +14,10 @@ namespace FSTemplate.Mvc
             renderer = new FSTemplateRenderer();
         }
 
-        public void Render(ViewContext viewContext, TextWriter writer)
+        public void Render(System.Web.Mvc.ViewContext viewContext, TextWriter writer)
         {
-            var res = renderer.Render(path);
+            var context = new ViewContext(viewContext.TempData, viewContext.ViewData, viewContext.ViewData.Model);
+            var res = renderer.Render(path, context);
             writer.Write(res);
             writer.Close();
         }

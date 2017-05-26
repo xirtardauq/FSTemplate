@@ -7,7 +7,7 @@ open System.IO
 open System.Collections.Generic
 
 type FSTemplateRenderer() = 
-    member this.Render(path: string) = 
+    member this.Render(path: string, viewContext: ViewContext) = 
         let checker = FSharpChecker.Create()
         //let assembly = @"C:\Users\Andrii Pastushenko\Desktop\projects\FSTemplate\FSTemplate\bin\Debug\FSTemplate.dll"
         let codeBase = Assembly.GetExecutingAssembly().CodeBase
@@ -29,17 +29,25 @@ type FSTemplateRenderer() =
 
         let assemblyCode = dynAssembly.Value
         
-        let render = 
+        let declaredMethods = 
             assemblyCode.DefinedTypes
             |> List.ofSeq
             |> List.map (fun x -> x.DeclaredMethods |> List.ofSeq) 
             |> List.concat
-            |> List.map (fun x -> x, x.GetCustomAttributes() |> List.ofSeq) 
-            |> List.filter (fun (_, y) -> y.Length = 1 && y.[0].GetType() = typedefof<Html.Render>)
+
+        let withAttributes =
+            declaredMethods
+            |> List.map (fun x -> x, x.GetCustomAttributes() |> Seq.map (fun x -> x.GetType()))             
+
+        let render = 
+            withAttributes
+            |> List.filter (fun (_, y) -> Seq.contains typedefof<Html.Render> y)
             |> List.head
             |> fst
+        
+        let parameters = Renderer.matchParams render viewContext
 
-        let res = render.Invoke(null, [||]) :?> Element.Node
+        let res = render.Invoke(null, parameters) :?> Element.Node
 
         Element.render res
 

@@ -57,7 +57,9 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="App.config" />
     <Compile Include="Element.fs" />
+    <Compile Include="ViewContext.fs" />
     <Compile Include="Html.fs" />
+    <Compile Include="Renderer.fs" />
     <Compile Include="FSTemplateRenderer.fs" />
     <None Include="Test.fsx" />
     <Content Include="packages.config" />
