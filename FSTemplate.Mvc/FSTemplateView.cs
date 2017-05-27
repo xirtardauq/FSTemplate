@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace FSTemplate.Mvc
@@ -18,7 +19,9 @@ namespace FSTemplate.Mvc
         {
             var context = new ViewContext(viewContext.TempData, viewContext.ViewData, viewContext.ViewData.Model);
             var res = renderer.Render(path, context);
-            writer.Write(res);
+            var result = renderer.ResultOrThrow(res);
+
+            writer.Write(result);
             writer.Close();
         }
     }

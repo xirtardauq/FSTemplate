@@ -9,9 +9,6 @@ let transformValuesToLi values =
     |> List.ofArray
 
 [<Render>]
-let render (model: IndexModel) (viewContext: ViewContext)= 
-    p [] [
-        text model.Name
-        ul [] (model.Values |> transformValuesToLi)
-    ]
+let index (model: IndexModel) = 
+    model.Name
     

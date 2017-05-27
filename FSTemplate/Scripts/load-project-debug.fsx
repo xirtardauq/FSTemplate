@@ -2,6 +2,7 @@
 #I __SOURCE_DIRECTORY__
 #load "load-references-debug.fsx"
 #load "../AssemblyInfo.fs"
+      "../Base.fs"
       "../Element.fs"
       "../ViewContext.fs"
       "../Html.fs"
