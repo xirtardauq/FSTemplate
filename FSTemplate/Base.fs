@@ -9,3 +9,9 @@ let bind func =
         match input with 
         | Success s -> func s
         | Error e -> Error e
+
+let passSecond f =
+    fun (x, y) ->
+        match f x with
+        | Success s -> Success (s, y)
+        | Error e -> Error e

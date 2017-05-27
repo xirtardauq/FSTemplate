@@ -5,7 +5,7 @@ open FSTemplate
 open Base
 open Microsoft.FSharp.Compiler.SourceCodeServices
 
-let compileTemplate (path, viewContext) = 
+let compileTemplate path = 
     let checker = FSharpChecker.Create()    
 
     let options = 
@@ -19,11 +19,11 @@ let compileTemplate (path, viewContext) =
         |> Async.RunSynchronously
 
     match exitCode with 
-    | 0 -> Success (dynAssembly.Value, viewContext)
+    | 0 -> Success dynAssembly.Value
     | _ -> Error ("One or more errors occured during template compilation: \n" + 
                  (errors |> Array.map (fun x -> x.Message) |> String.concat "\n"))
 
-let getDeclaredMethods ((assembly: Assembly), viewContext) = 
+let getDeclaredMethods (assembly: Assembly) = 
     let declaredMethods = 
         assembly.DefinedTypes
         |> List.ofSeq
@@ -32,9 +32,9 @@ let getDeclaredMethods ((assembly: Assembly), viewContext) =
 
     match declaredMethods.Length with 
     | 0 -> Error "Compiled template does not contain any methods"
-    | _ -> Success (declaredMethods, viewContext)
+    | _ -> Success declaredMethods
 
-let findRenderMethod ((declaredMethods: MethodInfo list), viewContext) = 
+let findRenderMethod (declaredMethods: MethodInfo list) = 
     let withAttributes =
         declaredMethods
         |> List.map (fun x -> x, x.GetCustomAttributes() |> Seq.map (fun x -> x.GetType()))             
@@ -45,7 +45,7 @@ let findRenderMethod ((declaredMethods: MethodInfo list), viewContext) =
     
     match withRender.Length with 
     | 0 -> Error "Compiled template does not contain method marked with [<Render>] attribute"       
-    | 1 -> Success (fst withRender.Head, viewContext)
+    | 1 -> Success (fst withRender.Head)
     | _ -> Error "Compiled template contains more than 1 Render methods"
 
 let matchParams (methodInfo: MethodInfo, viewContext: ViewContext) = 

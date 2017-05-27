@@ -4,9 +4,9 @@ open Base
 
 type FSTemplateRenderer() = 
     let renderWrapper = 
-        Renderer.compileTemplate >>
-        bind Renderer.getDeclaredMethods >>
-        bind Renderer.findRenderMethod >>
+        passSecond Renderer.compileTemplate >>
+        bind (passSecond Renderer.getDeclaredMethods) >>
+        bind (passSecond Renderer.findRenderMethod) >>
         bind Renderer.matchParams >>
         bind Renderer.renderTemplate
 
