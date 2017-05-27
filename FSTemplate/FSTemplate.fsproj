@@ -57,6 +57,8 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="App.config" />
     <Compile Include="Base.fs" />
+    <Compile Include="Config.fs" />
+    <Compile Include="TemplateCache.fs" />
     <Compile Include="Element.fs" />
     <Compile Include="ViewContext.fs" />
     <Compile Include="Html.fs" />

@@ -3,6 +3,8 @@
 #load "load-references-debug.fsx"
 #load "../AssemblyInfo.fs"
       "../Base.fs"
+      "../Config.fs"
+      "../TemplateCache.fs"
       "../Element.fs"
       "../ViewContext.fs"
       "../Html.fs"
