@@ -10,7 +10,7 @@ let compileTemplate path =
 
     let options = 
         [| "fsc.exe"; 
-            "-o"; "dummy.dll"; 
+            "-o"; "dummy.dll"; // when compiling to dynamic assembly -o parameter is ignored
             "-a"; path;               
         |]
 
@@ -25,10 +25,10 @@ let compileTemplate path =
 
 let getDeclaredMethods (assembly: Assembly) = 
     let declaredMethods = 
-        assembly.DefinedTypes
+        assembly.DefinedTypes        
+        |> Seq.map (fun x -> x.DeclaredMethods) 
+        |> Seq.concat
         |> List.ofSeq
-        |> List.map (fun x -> x.DeclaredMethods |> List.ofSeq) 
-        |> List.concat
 
     match declaredMethods.Length with 
     | 0 -> Error "Compiled template does not contain any methods"
@@ -49,7 +49,11 @@ let findRenderMethod (declaredMethods: MethodInfo list) =
     | _ -> Error "Compiled template contains more than 1 Render methods"
 
 let matchParams (methodInfo: MethodInfo, viewContext: ViewContext) = 
-    let parameters = methodInfo.GetParameters() |> Array.map (fun x -> x.ParameterType) |> List.ofSeq
+    let parameters = 
+        methodInfo.GetParameters() 
+        |> Array.map (fun x -> x.ParameterType) 
+        |> List.ofSeq
+
     let modelType = viewContext.model.GetType()
     let viewContextType = typedefof<ViewContext>
 
@@ -71,5 +75,9 @@ let renderTemplate (methodInfo: MethodInfo, parameters) =
         let res = methodInfo.Invoke(null, parameters) :?> Element.Node
         Success(Element.render res)
     with 
-       | :? System.InvalidCastException as e -> Error ("Invalid result type of Render method: " + e.Message)
-       | e -> Error e.Message
+       | :? System.InvalidCastException as e -> 
+            Error ("Invalid result type of Render method: " + e.Message)
+       | :? System.Reflection.TargetInvocationException as e -> 
+            Error ("Exception occured during template execution: " + e.InnerException.Message + "\n" + e.InnerException.StackTrace)
+       | e -> 
+            Error e.Message

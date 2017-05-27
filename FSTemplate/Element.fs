@@ -1,6 +1,7 @@
 ﻿module Element
 
-type Attr = Attr of string * string
+type Attr = 
+    Attr of string * string
 
 type Tag = {
     tag: string
