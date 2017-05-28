@@ -20,6 +20,13 @@ F# templating engine for ASP.NET. Inspired by [Elm View functions](http://crossi
     - `ViewContext * Model -> Node`
     - `Model * ViewContext -> Node`
 
+## How to add
+Add following code in your *Global.asax.cs* `Application_Start()` method:  
+```csharp
+ViewEngines.Engines.Clear(); //optional
+ViewEngines.Engines.Add(new FSViewEngine());
+```
+
 ## Example
 Let's say you have `HomeController` that returns a `View` with some model:
 ```csharp
@@ -34,11 +41,14 @@ public ActionResult Index()
 }
 ```
 and you have following `Views` folder structure:  
-![views](../blob/master/docs/views.png)  
+![views](docs/views.png)  
 - *references.fsx* - contains all references that is needed for template compilation
     ```fsharp
+    // actual FSTemplate library 
     #r "../bin/FSTemplate.dll"
+    // web-app dll for referencing models or other classes
     #r "../bin/FSTemplate.Sample.dll"
+    // other dependencies...
     ```
 - *baseLayout.fsx* (optional) - base layout for the page. For example
     ```fsharp
@@ -77,4 +87,4 @@ and you have following `Views` folder structure:
     ```
 
 As a result request to `/Home/Index` returns following page:  
-![index page](../blob/master/docs/html.png)
+![index page](docs/html.png)
