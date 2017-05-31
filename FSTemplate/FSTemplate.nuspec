@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>andrii1812@gmail.com</authors>
+    <owners>andrii1812@gmail.com</owners>
+    <licenseUrl>https://github.com/andrii1812/FSTemplate/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/andrii1812/FSTemplate/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>F# templating engine core</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>FSharp templating-engine FSTemplate</tags>
+  </metadata>
+</package>

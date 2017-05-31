@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>andrii1812@gmail.com</authors>
+    <owners>andrii1812@gmail.com</owners>
+    <licenseUrl>https://github.com/andrii1812/FSTemplate/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/andrii1812/FSTemplate/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>FSTemplate implementation for ASP.NET MVC</description>
+    <releaseNotes>Initial release of the package</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>FSTemplate MVC asp-net</tags>
+    <dependencies>
+      <dependency id="FSTemplate" version="1.0.0"/>
+    </dependencies>
+  </metadata>
+</package>

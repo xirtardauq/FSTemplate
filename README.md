@@ -21,6 +21,12 @@ F# templating engine for ASP.NET. Inspired by [Elm View functions](http://crossi
     - `Model * ViewContext -> Node`
 
 ## How to add
+
+Install following NuGet package
+```powershell
+PM> Install-Package FSTemplate.Mvc
+```
+
 Add following code in your *Global.asax.cs* `Application_Start()` method:  
 ```csharp
 ViewEngines.Engines.Clear(); //optional
