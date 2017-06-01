@@ -53,7 +53,7 @@ let matchParams (methodInfo: MethodInfo, viewContext: ViewContext) =
         |> Array.map (fun x -> x.ParameterType) 
         |> List.ofSeq
 
-    let modelType = viewContext.model.GetType()
+    let modelType = if not (viewContext.model = null) then viewContext.model.GetType() else null
     let viewContextType = typedefof<ViewContext>
 
     match parameters with    
