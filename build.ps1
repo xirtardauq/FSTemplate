@@ -19,8 +19,8 @@ function PublishNuget($name) {
 
 function Build() {
     Clean
-    BuildNuget(".\FSTemplate\FSTemplate.fsproj")
-    BuildNuget(".\FSTemplate.Mvc\FSTemplate.Mvc.csproj")
+    BuildNuget(".\src\FSTemplate\FSTemplate.fsproj")
+    BuildNuget(".\src\FSTemplate.Mvc\FSTemplate.Mvc.csproj")
 }
 
 switch ($args[0]) {
