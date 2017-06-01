@@ -13,9 +13,9 @@ let transformValuesToLi values =
 [<Render>]
 let index (model: IndexModel) = 
     BaseLayout.baseLayout [
-        div [] [
+        div [class' "container"] [
             text model.Name; 
-            ul [] (model.Values |> transformValuesToLi)
+            ul [id' "list"] (model.Values |> transformValuesToLi)
         ]
     ]
     

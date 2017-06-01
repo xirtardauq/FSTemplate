@@ -518,11 +518,34 @@ module Html =
     let html head_ body_ = 
         element "html" [] [head [] head_; body [] body_]
 
+    /// <summary>
+    /// Specifies one or more classnames for an element
+    /// </summary>
+    let class' = attr "class"
+
+    /// <summary>
+    /// Specifies a unique id for an element
+    /// </summary>
+    let id' = attr "id"
+
+    /// <summary>
+    /// Specifies the URL of the page the link goes to
+    /// </summary>
+    let href = attr "href"
+
+    /// <summary>
+    /// Specifies the URL of the media file
+    /// </summary>
+    let src = attr "src"
+
+    let on event = 
+        attr ("on" + event)
+
     let stylesheet path = 
-        element "link" [Attr("rel", "stylesheet"); Attr("href", path)] []
+        element "link" [Attr("rel", "stylesheet"); (href path)] []
 
     let script path = 
-        element "script" [Attr("src", path)] []
+        element "script" [(src path)] []
 
     // marker attribute
     type Render() =
