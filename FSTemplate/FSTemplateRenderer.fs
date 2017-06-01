@@ -1,7 +1,7 @@
 ﻿namespace FSTemplate
 
-open Base
 open System.IO
+open Util
 
 type FSTemplateRenderer(useCache) = 
     let compileTemplate = 

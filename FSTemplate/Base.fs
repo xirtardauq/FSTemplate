@@ -1,6 +1,9 @@
-﻿module Base
+﻿namespace FSTemplate
 
 open System.Reflection
+open System.Collections.Generic
+open System.IO
+
 
 type RenderResult<'a> = 
     | Success of 'a
@@ -11,14 +14,16 @@ type ICacheProvider =
     abstract member TrySet: string * (MethodInfo*int64) -> bool
     abstract member TryRemove: string -> bool
 
-let bind func = 
-    fun input -> 
-        match input with 
-        | Success s -> func s
-        | Error e -> Error e
+type ViewContext = {
+    tempData: IDictionary<string, obj>
+    viewData: IDictionary<string, obj>
+    model: obj
+}
 
-let passSecond f =
-    fun (x, y) ->
-        match f x with
-        | Success s -> Success (s, y)
-        | Error e -> Error e
+type ViewResolverContext = {
+    controller: string
+    viewName: string
+}
+
+type IViewResolver = 
+    abstract member Resolve : ViewResolverContext -> string

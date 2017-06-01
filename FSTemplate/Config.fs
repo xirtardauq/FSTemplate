@@ -2,12 +2,11 @@
 
 module Config =
 
-    open Base
-
-    type FSTemplateConfig(cacheProvider, viewPathTemplate: string) =         
+    type FSTemplateConfig(cacheProvider, viewResolver: IViewResolver) =         
         member val CacheProvider: ICacheProvider = cacheProvider with get,set
         
-        member val ViewPathTemplate = viewPathTemplate with get
+        member val ViewResolver = viewResolver with get
+
 
     module ConfigStore =
         let mutable private x: Lazy<FSTemplateConfig> = null

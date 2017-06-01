@@ -1,9 +1,9 @@
 ﻿#load "Scripts/load-references-debug.fsx"
-#load "Element.fs"
-#load "Html.fs"
+#load "Scripts/load-project-debug.fsx"
 
 open Element
 open FSTemplate.Html 
+open FSTemplate
 
 let tree = 
     ul [] 

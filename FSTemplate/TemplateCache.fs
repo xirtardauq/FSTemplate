@@ -3,8 +3,8 @@
 open System.IO
 open System.Collections.Concurrent
 open System.Reflection
-open Base
 open FSTemplate.Config
+open FSTemplate
 
 type DefaultCacheProvider() =
     let cache = new ConcurrentDictionary<string, MethodInfo*int64>()

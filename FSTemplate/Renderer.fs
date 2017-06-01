@@ -2,7 +2,6 @@
 
 open System.Reflection
 open FSTemplate
-open Base
 open Microsoft.FSharp.Compiler.SourceCodeServices
 
 let compileTemplate path = 

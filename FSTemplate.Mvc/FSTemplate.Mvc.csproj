@@ -73,6 +73,7 @@
     <Compile Include="FSTemplateView.cs" />
     <Compile Include="FSViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FSTemplate.Mvc.nuspec">

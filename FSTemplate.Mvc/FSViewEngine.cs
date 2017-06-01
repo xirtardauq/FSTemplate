@@ -10,7 +10,8 @@ namespace FSTemplate.Mvc
         {
             Config.ConfigStore.SetInstance(
                 new Config.FSTemplateConfig(
-                    new TemplateCache.DefaultCacheProvider(), ""));
+                    new TemplateCache.DefaultCacheProvider(), 
+                    new ViewResolver("~/Views/{controller}/{view}.fsx")));
         }
 
         public ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
@@ -19,9 +20,12 @@ namespace FSTemplate.Mvc
         }
 
         public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
-        {            
-            var template = $"~/Views/{controllerContext.RouteData.Values["controller"]}/{viewName}.fsx";
-            var path = controllerContext.HttpContext.Server.MapPath(template);
+        {
+            var context = new ViewResolverContext(
+                                controllerContext.RequestContext.RouteData.Values["controller"].ToString(), 
+                                viewName);
+
+            string path = Config.ConfigStore.GetInstance().ViewResolver.Resolve(context);
             return new ViewEngineResult(new FSTemplateView(path, useCache), this);
         }
 
