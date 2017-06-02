@@ -1,7 +1,5 @@
 ﻿namespace FSTemplate
 
-open System.Text.RegularExpressions
-
 module Util = 
     let bind func = 
         fun input -> 
@@ -16,12 +14,18 @@ module Util =
             | Error e -> Error e
 
     let mapViewPath path (context: ViewResolverContext) =
+        let assertValue ((pattern: string, value) as t) = 
+            if value = null then
+                failwithf "%s should not be null" (pattern.Substring(1, pattern.Length - 2))
+            else 
+                t
+
         let pathList = [
                 ("{controller}", context.controller);
                 ("{view}", context.viewName)
             ]    
 
         pathList
-        |> List.map (fun (x, y) -> new Regex(x), y)
-        |> List.fold (fun state (x, y) -> x.Replace(state, y)) path
+        |> List.map assertValue
+        |> List.fold (fun (state: string) (x, y) -> state.Replace(x, y)) path
     
