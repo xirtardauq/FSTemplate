@@ -28,4 +28,14 @@ module Util =
         pathList
         |> List.map assertValue
         |> List.fold (fun (state: string) (x, y) -> state.Replace(x, y)) path
+
+    let errorEmptyList errorMessage (lst: 'a list) = 
+        match lst with 
+        | [] -> Error errorMessage
+        | _ -> Success lst
+
+    let headOrError errorMessage (lst: 'a list) = 
+        match lst with         
+        | x::[] -> Success x
+        | _ -> Error errorMessage
     

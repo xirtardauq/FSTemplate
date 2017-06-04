@@ -4,48 +4,38 @@ open System.Reflection
 open FSTemplate
 open Microsoft.FSharp.Compiler.SourceCodeServices
 
-let compileTemplate path = 
-    let checker = FSharpChecker.Create()    
+let createCompilerOptions path = [| 
+        "fsc.exe"; 
+        "-o"; "dummy.dll"; // when compiling to dynamic assembly -o parameter is ignored
+        "-a"; path 
+    |]
 
-    let options = 
-        [| "fsc.exe"; 
-            "-o"; "dummy.dll"; // when compiling to dynamic assembly -o parameter is ignored
-            "-a"; path;               
-        |]
+let callFSharpCompiler options = 
+    let transformFirst f (a, b, c) = 
+        (f a), b, c
 
-    let errors, exitCode, dynAssembly = 
-        checker.CompileToDynamicAssembly(options, execute=None)
-        |> Async.RunSynchronously
+    let checker = FSharpChecker.Create()
+    checker.CompileToDynamicAssembly(options, execute=None)    
+    |> Async.RunSynchronously
+    |> transformFirst (Array.map (fun x -> x.Message))
 
+let handleCompileResults (errors, exitCode, (dynAssembly: Assembly option)) =     
     match exitCode with 
     | 0 -> Success dynAssembly.Value
     | _ -> Error ("One or more errors occured during template compilation: \n" + 
-                 (errors |> Array.map (fun x -> x.Message) |> String.concat "\n"))
+                 (errors |> String.concat "\n"))
 
-let getDeclaredMethods (assembly: Assembly) = 
-    let declaredMethods = 
-        assembly.DefinedTypes        
-        |> Seq.map (fun x -> x.DeclaredMethods) 
-        |> Seq.concat
-        |> List.ofSeq
+let getDeclaredMethods (assembly: Assembly) =     
+    assembly.DefinedTypes        
+    |> Seq.map (fun x -> x.DeclaredMethods) 
+    |> Seq.concat
+    |> List.ofSeq
 
-    match declaredMethods.Length with 
-    | 0 -> Error "Compiled template does not contain any methods"
-    | _ -> Success declaredMethods
+let filterRenderMethod (declaredMethods: MethodInfo list) = 
+    declaredMethods
+    |> List.map (fun x -> x, x.GetCustomAttributes() |> Seq.map (fun x -> x.GetType()))             
+    |> List.filter (fun (_, y) -> Seq.contains typedefof<Html.Render> y)
 
-let findRenderMethod (declaredMethods: MethodInfo list) = 
-    let withAttributes =
-        declaredMethods
-        |> List.map (fun x -> x, x.GetCustomAttributes() |> Seq.map (fun x -> x.GetType()))             
-
-    let withRender = 
-        withAttributes
-        |> List.filter (fun (_, y) -> Seq.contains typedefof<Html.Render> y)
-    
-    match withRender.Length with 
-    | 0 -> Error "Compiled template does not contain method marked with [<Render>] attribute"       
-    | 1 -> Success (fst withRender.Head)
-    | _ -> Error "Compiled template contains more than 1 Render methods"
 
 let matchParams (methodInfo: MethodInfo, viewContext: ViewContext) = 
     let parameters = 

@@ -1,11 +1,11 @@
-﻿module Util
+﻿module UtilTests
 
 open NUnit.Framework
 open FSTemplate
 open FsUnit
 open System
     
-module BindTests = 
+module Bind = 
     let sut = Util.bind (fun x -> Success (x + 1))
 
     [<Test>]
@@ -32,7 +32,7 @@ module BindTests =
 
         res |> should equal (Success 2)
 
-module PassSecondTests = 
+module PassSecond = 
     [<Test>]
     let ``passSecond should return function that bypasses second tuple argument to success result``() =
         let sut = Util.passSecond (fun x -> Success (x + 1))
@@ -46,7 +46,7 @@ module PassSecondTests =
         | Success _ -> failwith "unexpected Success"
         | Error e -> e |> should equal "2"
 
-module MapViewPathTests = 
+module MapViewPath = 
     [<Test>]
     let ``mapViewPath should return empty path for input empty path with any args``() = 
         Util.mapViewPath "" {controller="qwe"; viewName="123"} 
@@ -65,3 +65,21 @@ module MapViewPathTests =
     let ``mapViewPath should map path according to the template``() =
         Util.mapViewPath "{controller}/{view}" {controller="qwe"; viewName="rty"}
         |> should equal "qwe/rty"
+
+module ErrorEmptyList = 
+    [<Test>]
+    let ``errorEmptyList should return error on empty list``() =
+        let res = Util.errorEmptyList "error" []
+
+        match res with 
+        | Error e -> e |> should equal "error"
+        | Success _ -> failwith "unexpected success"
+
+    [<Test>]
+    let ``errorEmptyList should return Success on non empty list``() =
+        let res = Util.errorEmptyList "" [1]
+
+        match res with 
+        | Success e -> e |> should equal [1]
+        | Error _ -> failwith "unexpected error"
+

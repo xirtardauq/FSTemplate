@@ -2,6 +2,7 @@
 
 module Config =
 
+    [<AllowNullLiteral>]
     type FSTemplateConfig(cacheProvider, viewResolver: IViewResolver) =         
         member val CacheProvider: ICacheProvider = cacheProvider with get,set
         
@@ -11,7 +12,11 @@ module Config =
     module ConfigStore =
         let mutable private x: Lazy<FSTemplateConfig> = null
 
-        let GetInstance() = x.Value
+        let GetInstance() = 
+            if x = null then 
+                null 
+            else 
+                x.Value
 
         let SetInstance(value) = 
             x <- lazy(value)

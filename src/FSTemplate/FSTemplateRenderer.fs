@@ -3,16 +3,31 @@
 open System.IO
 open Util
 
-type FSTemplateRenderer(useCache) = 
+type FSTemplateRenderer(useCache) =
     let compileTemplate = 
-        passSecond Renderer.compileTemplate >>
-        bind (passSecond Renderer.getDeclaredMethods) >>
-        bind (passSecond Renderer.findRenderMethod)
+        Renderer.createCompilerOptions >> 
+        Renderer.callFSharpCompiler >> 
+        Renderer.handleCompileResults
+ 
+    let getDeclaredMethods = 
+        Renderer.getDeclaredMethods >> 
+        errorEmptyList "Compiled template does not contain any methods"
+
+    let getRenderMethod = 
+        Renderer.filterRenderMethod >> 
+        errorEmptyList "Compiled template does not contain method marked with [<Render>] attribute" >>
+        bind (Util.headOrError "Compiled template contains more than 1 Render methods") >>
+        bind (fst >> Success)                        
+
+    let compileTemplate = 
+        passSecond compileTemplate >>
+        bind (passSecond getDeclaredMethods) >>
+        bind (passSecond getRenderMethod)
         
     let trySetCache cacheKey value = 
         match value with
         | Success(methodInfo, _) -> TemplateCache.setCache cacheKey methodInfo
-        | Error e -> ()
+        | Error _ -> ()
 
     let tryGetCache fileInfo = 
         if useCache then
