@@ -30,7 +30,9 @@ type FSTemplateRenderer(useCache) =
         
     let trySetCache cacheKey value = 
         match value with
-        | Success(methodInfo, _) -> TemplateCache.setCache cacheKey methodInfo
+        | Success(methodInfo, _) -> 
+            if useCache then
+                TemplateCache.setCache cacheKey methodInfo
         | Error _ -> ()
 
     let tryGetCache fileInfo = 
@@ -39,7 +41,7 @@ type FSTemplateRenderer(useCache) =
         else 
             None
 
-    member this.Render(fileInfo: FileInfo, viewContext: ViewContext) =      
+    member __.Render(fileInfo: FileInfo, viewContext: ViewContext) =      
         let compiledTemplate = 
             match tryGetCache fileInfo with
             | Some template -> 
@@ -53,7 +55,7 @@ type FSTemplateRenderer(useCache) =
         |> bind matchParams
         |> bind Renderer.renderTemplate
 
-    member this.ResultOrThrow(res) =
+    member __.ResultOrThrow(res) =
         match res with 
         | Success s -> s
         | Error e -> failwith e
