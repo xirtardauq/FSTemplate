@@ -18,7 +18,9 @@ type ViewContext = {
     tempData: IDictionary<string, obj>
     viewData: IDictionary<string, obj>
     model: obj
-}
+} with
+    static member create tempData viewData model = 
+        {tempData=tempData; viewData=viewData; model=model}
 
 type ViewResolverContext = {
     controller: string

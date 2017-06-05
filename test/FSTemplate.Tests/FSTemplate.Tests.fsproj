@@ -51,10 +51,11 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="TestUtils.fs" />
     <Compile Include="UtilTests.fs" />
+    <Compile Include="RendererTests.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
-    <Compile Include="RendererTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">

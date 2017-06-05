@@ -6,8 +6,6 @@ open System.Reflection
 open FsUnit
 
 module CreateCompilerOptions =
-    open FsUnit
-
     [<Test>]
     let ``createCompilerOptions should build options correctly``() =
         let path = "some/path"
@@ -35,4 +33,25 @@ module HandleCompileResults =
         | Error e -> 
             e |> should equal "One or more errors occured during template compilation: \nsome error\nsome other error"
 
+module MatchParams =
+    open System.Collections.Generic
 
+    let viewContext = ViewContext.create (new Dictionary<string, obj>()) (new Dictionary<string, obj>()) 123
+    let badViewContext = ViewContext.create (new Dictionary<string, obj>()) (new Dictionary<string, obj>()) null
+ 
+    let cases = 
+        TestUtils.create3Cases [
+            (viewContext,    [],                                 Success([||]))
+            (viewContext,    [typeof<int>],                      Success([|123 :> obj|]))
+            (viewContext,    [typeof<ViewContext>],              Success([|viewContext :> obj|]))
+            (viewContext,    [typeof<int>; typeof<ViewContext>], Success([|123 :> obj; viewContext :> obj|]))
+            (viewContext,    [typeof<ViewContext>; typeof<int>], Success([|viewContext :> obj; 123 :> obj|]))
+            (badViewContext, [typeof<int64>],                    Error("Unknown render method signature: [System.Int64]"))
+            (viewContext,    [typeof<string>],                   Error("Unknown render method signature: [System.String]"))
+        ]
+
+    [<TestCaseSource("cases")>]
+    let ``matchParams should correctly match Render parameters list`` viewContext parametersTypes values = 
+        let res = Renderer.matchParams parametersTypes viewContext
+        res |> should equal values        
+        

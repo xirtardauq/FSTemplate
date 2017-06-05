@@ -23,6 +23,10 @@ type FSTemplateRenderer(useCache) =
         passSecond compileTemplate >>
         bind (passSecond getDeclaredMethods) >>
         bind (passSecond getRenderMethod)
+
+    let matchParams (methodInfo, viewContext) =
+        let parameters = Renderer.getMethodParameters methodInfo         
+        passSecond (fun () -> Renderer.matchParams parameters viewContext) ((), methodInfo)
         
     let trySetCache cacheKey value = 
         match value with
@@ -46,7 +50,7 @@ type FSTemplateRenderer(useCache) =
                 template
 
         compiledTemplate
-        |> bind Renderer.matchParams
+        |> bind matchParams
         |> bind Renderer.renderTemplate
 
     member this.ResultOrThrow(res) =

@@ -1,5 +1,6 @@
 ﻿module Renderer
 
+open System
 open System.Reflection
 open FSTemplate
 open Microsoft.FSharp.Compiler.SourceCodeServices
@@ -36,30 +37,29 @@ let filterRenderMethod (declaredMethods: MethodInfo list) =
     |> List.map (fun x -> x, x.GetCustomAttributes() |> Seq.map (fun x -> x.GetType()))             
     |> List.filter (fun (_, y) -> Seq.contains typedefof<Html.Render> y)
 
+let getMethodParameters (methodInfo: MethodInfo) = 
+    methodInfo.GetParameters() 
+    |> Array.map (fun x -> x.ParameterType) 
+    |> List.ofSeq
 
-let matchParams (methodInfo: MethodInfo, viewContext: ViewContext) = 
-    let parameters = 
-        methodInfo.GetParameters() 
-        |> Array.map (fun x -> x.ParameterType) 
-        |> List.ofSeq
-
+let matchParams (parameters: Type list) (viewContext: ViewContext) = 
     let modelType = if not (viewContext.model = null) then viewContext.model.GetType() else null
     let viewContextType = typedefof<ViewContext>
 
     match parameters with    
-    | x::y when x = modelType && y.Length = 1 && y.[0] = viewContextType -> 
-        Success (methodInfo, [| viewContext.model; (viewContext :> obj) |])
-    | x::y when x = viewContextType && y.Length = 1 && y.[0] = modelType -> 
-        Success (methodInfo, [|(viewContext :> obj); viewContext.model;|])
+    | x::[y] when x = modelType && y = viewContextType -> 
+        Success([| viewContext.model; (viewContext :> obj) |])
+    | x::[y] when x = viewContextType && y = modelType -> 
+        Success([|(viewContext :> obj); viewContext.model;|])
     | [x] when x = modelType -> 
-        Success (methodInfo, [|viewContext.model|])
+        Success([|viewContext.model|])
     | [x] when x = viewContextType -> 
-        Success (methodInfo, [|viewContext|])
+        Success([|viewContext|])
     | [] -> 
-        Success (methodInfo, [||])
-    | _ -> Error "Unknown render method signature"
+        Success([||])
+    | _ -> Error (sprintf "Unknown render method signature: %A" parameters)
 
-let renderTemplate (methodInfo: MethodInfo, parameters) = 
+let renderTemplate (parameters, methodInfo: MethodInfo) = 
     try
         let res = methodInfo.Invoke(null, parameters) :?> Element.Node
         Success(Element.render res)
