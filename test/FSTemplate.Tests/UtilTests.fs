@@ -83,3 +83,18 @@ module ErrorEmptyList =
         | Success e -> e |> should equal [1]
         | Error _ -> failwith "unexpected error"
 
+module HeadOrError = 
+    [<Test>]
+    let ``headOrError should return error when list is not contains single element``() =
+        let res = Util.headOrError "error" []
+        match res with
+        | Error e -> e |> should equal "error"
+        | Success s -> failwithf "Unexpected Success %A" s
+
+    [<Test>]
+    let ``headOrError should return single element from the list``() = 
+        let res = Util.headOrError "error" [1]
+        match res with
+        | Error e -> failwithf "Unexpected Error %A" e
+        | Success s -> s |> should equal 1 
+        
