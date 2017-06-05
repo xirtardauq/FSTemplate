@@ -2,6 +2,8 @@ $output = ".\bld\"
 $test = ".\test\"
 $testDll = $test + "*\bin\Release\*"
 $nunit = ".\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe"
+$openCover = ".\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
+$reportGenerator = ".\packages\ReportGenerator.2.5.8\tools\ReportGenerator.exe"
 
 function Clean() {
     if(!(Test-Path $output)) {
@@ -27,8 +29,17 @@ function Test() {
         msbuild $_.FullName /p:Configuration=Release
     }
 
-    $testLibs = Get-ChildItem $testDll -Include "*Tests.dll" -Recurse | ForEach-Object { $_.FullName }
-    .$nunit $testLibs
+    $testLibs = Get-ChildItem $testDll -Include "*Tests.dll" -Recurse | ForEach-Object { """" +  $_.FullName +  """"}
+    $nunitArgs = [String]::Join(" ", $testLibs)
+    $coverageOutput = ".\.coverage\coverage.xml"
+
+    if (!(Test-Path ".\.coverage")) {
+        mkdir ".\.coverage"
+    }
+
+    .$openCover -target:$nunit "-targetargs:""$($nunitArgs)""" -filter:"-*Tests" -output:$coverageOutput -register:user -hideskipped:All
+
+    .$reportGenerator "-reports:$($coverageOutput)" "-targetdir:.\.coverage"
 }
 
 function Publish () {
