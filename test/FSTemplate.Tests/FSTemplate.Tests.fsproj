@@ -54,6 +54,7 @@
     <Compile Include="UtilTests.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
+    <Compile Include="RendererTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
