@@ -10,6 +10,8 @@ namespace FSTemplate.Sample.Mvc
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            FSTemplateBootstrapper.Bootstrap();            
             ViewEngines.Engines.Add(new FSViewEngine());
         }
     }

@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FSTemplateBootstrapper.cs" />
     <Compile Include="FSTemplateView.cs" />
     <Compile Include="FSViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

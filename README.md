@@ -29,6 +29,8 @@ PM> Install-Package FSTemplate.Mvc
 
 Add following code in your *Global.asax.cs* `Application_Start()` method:  
 ```csharp
+FSTemplateBootstrapper.Bootstrap();
+
 ViewEngines.Engines.Clear(); //optional
 ViewEngines.Engines.Add(new FSViewEngine());
 ```
