@@ -96,3 +96,12 @@ and you have following `Views` folder structure:
 
 As a result request to `/Home/Index` returns following page:  
 ![index page](docs/html.png)
+
+## Todo
+- [x] Unit tests
+- [x] Implementation of all html tags
+- [ ] Integration tests
+- [ ] ASP.NET Core bindings
+- [ ] NancyFX bindings
+- [ ] Config sections and loading configuration
+- [ ] CSS rendering implementation
