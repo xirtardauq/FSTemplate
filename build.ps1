@@ -29,15 +29,15 @@ function Test() {
         msbuild $_.FullName /p:Configuration=Release
     }
 
-    $testLibs = Get-ChildItem $testDll -Include "*Tests.dll" -Recurse | ForEach-Object { """" +  $_.FullName +  """"}
+    $testLibs = Get-ChildItem $testDll -Include "*Tests.dll" -Recurse | ForEach-Object { """""" +  $_.FullName +  """"""}
     $nunitArgs = [String]::Join(" ", $testLibs)
     $coverageOutput = ".\.coverage\coverage.xml"
-
+    
     if (!(Test-Path ".\.coverage")) {
         mkdir ".\.coverage"
     }
 
-    .$openCover -target:$nunit "-targetargs:""$($nunitArgs)""" -filter:"-*Tests" -output:$coverageOutput -register:user -hideskipped:All
+    .$openCover -target:$nunit "-targetargs:$($nunitArgs)" -filter:"+[FSTemplate*]* -*Tests" -output:$coverageOutput -register:user -hideskipped:All
 
     .$reportGenerator "-reports:$($coverageOutput)" "-targetdir:.\.coverage"
 }

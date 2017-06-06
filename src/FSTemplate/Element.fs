@@ -3,31 +3,45 @@
 type Attr = 
     Attr of string * string
 
-type Tag = {
+type TagInfo = {
     tag: string
     attr: Attr list
-    children: Node list
+    children: Tag list
 }
-and Node = Tag of Tag | Text of string
+and Tag = 
+    | Paired of TagInfo
+    | Unpaired of TagInfo    
+    | Text of string    
 
 let renderAttr attrs = 
     attrs
-    |> List.map (fun (Attr(x, y)) -> " " + x + "=\"" + y + "\"")
-    |> String.concat ""
+    |> List.map (fun (Attr(x, y)) -> x + "=\"" + y + "\"")
+    |> String.concat " "
 
-let element tag attr children = 
-    Tag({tag=tag; attr=attr; children=children})
+let addLeadingSpace = 
+    function
+    | null -> null
+    | "" -> ""
+    | str -> " " + str
+    
+let rec render =    
+    function
+    | Paired(elem) ->
+        "<" + elem.tag + addLeadingSpace (renderAttr elem.attr) + ">" +
+        (elem.children |> List.map render |> String.concat " ") +
+        "</" + elem.tag + ">"
+    | Unpaired(elem) -> 
+        "<" + elem.tag + addLeadingSpace (renderAttr elem.attr) + "/>"
+    | Text(text) -> text
+
+let pairedTag tag attr children = 
+    Paired({tag=tag; attr=attr; children=children})
+
+let unpairedTag tag attr = 
+    Unpaired({tag=tag; attr=attr; children=[]})
 
 let attr name value = 
     Attr(name, value)
-
-let rec render (node: Node) =
-    match node with
-    | Tag(elem) ->
-        "<" + elem.tag + renderAttr elem.attr + ">" +
-        (List.map render elem.children |> String.concat " ") +
-        "</" + elem.tag + ">"
-    | Text(text) -> text
 
 
 

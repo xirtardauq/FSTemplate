@@ -37,6 +37,9 @@ let tryGetFromCache (fileInfo: FileInfo) =
         None
 
 let setCache (fileInfo: FileInfo) obj = 
-    let prov = ConfigStore.GetInstance().CacheProvider 
-    while not (prov.TrySet(fileInfo.FullName, (obj, getTime fileInfo))) do 
-        ()
+    let prov = ConfigStore.GetInstance().CacheProvider
+    let mutable iters = 0 
+    while not (prov.TrySet(fileInfo.FullName, (obj, getTime fileInfo))) && iters < 5 do 
+        iters <- iters + 1
+    // if it failed to add item to cache, it means that some other thread already compiled this
+    // template and we have  no need to update this value 

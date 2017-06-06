@@ -54,6 +54,7 @@
     <Compile Include="TestUtils.fs" />
     <Compile Include="UtilTests.fs" />
     <Compile Include="RendererTests.fs" />
+    <Compile Include="ElementTests.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
   </ItemGroup>

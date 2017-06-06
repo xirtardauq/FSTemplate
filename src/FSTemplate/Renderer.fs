@@ -61,7 +61,7 @@ let matchParams (parameters: Type list) (viewContext: ViewContext) =
 
 let renderTemplate (parameters, methodInfo: MethodInfo) = 
     try
-        let res = methodInfo.Invoke(null, parameters) :?> Element.Node
+        let res = methodInfo.Invoke(null, parameters) :?> Element.Tag
         Success(Element.render res)
     with 
        | :? System.InvalidCastException as e -> 

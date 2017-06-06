@@ -1,7 +1,7 @@
-#r "bin/Debug/FSTemplate.dll"
-#r "bin/Debug/FSTemplate.Mvc.dll"
+#r "bin/Release/FSTemplate.dll"
+#r "bin/Release/FSTemplate.Mvc.dll"
 
-open FSTemplate.Html
+open FSTemplate
 
 [<Render>]
 let someView() =

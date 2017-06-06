@@ -1,7 +1,6 @@
 ﻿#load "../references.fsx"
 #load "../baseLayout.fsx"
 
-open FSTemplate.Html
 open FSTemplate
 open FSTemplate.Sample.Mvc.Models
 

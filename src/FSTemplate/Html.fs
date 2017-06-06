@@ -3,520 +3,521 @@
 open System
 open Element
 
+[<AutoOpen>]
 module Html =     
     
     /// <summary>
     /// Defines a hyperlink
     /// </summary>
-    let a = element "a"
+    let a = pairedTag "a"
     
     /// <summary>
     /// Defines an abbreviation or an acronym
     /// </summary>
-    let abbr = element "abbr"
+    let abbr = pairedTag "abbr"
     
     /// <summary>
     /// Defines contact information for the author/owner of a document
     /// </summary>
-    let address = element "address"
+    let address = pairedTag "address"
     
     /// <summary>
     /// Defines an area inside an image-map
     /// </summary>
-    let area = element "area"
+    let area = pairedTag "area"
     
     /// <summary>
     /// Defines an article
     /// </summary>
-    let article = element "article"
+    let article = pairedTag "article"
     
     /// <summary>
     /// Defines content aside from the page content
     /// </summary>
-    let aside = element "aside"
+    let aside = pairedTag "aside"
     
     /// <summary>
     /// Defines sound content
     /// </summary>
-    let audio = element "audio"
+    let audio = pairedTag "audio"
     
     /// <summary>
     /// Defines bold text
     /// </summary>
-    let b = element "b"
+    let b = pairedTag "b"
     
     /// <summary>
     /// Specifies the base URL/target for all relative URLs in a document
     /// </summary>
-    let base' = element "base"
+    let base' = unpairedTag "base"
     
     /// <summary>
     /// Isolates a part of text that might be formatted in a different direction 
     ///    from other text outside it
     /// </summary>
-    let bdi = element "bdi"
+    let bdi = pairedTag "bdi"
     
     /// <summary>
     /// Overrides the current text direction
     /// </summary>
-    let bdo = element "bdo"
+    let bdo = pairedTag "bdo"
     
     /// <summary>
     /// Defines a section that is quoted from another source
     /// </summary>
-    let blockquote = element "blockquote"
+    let blockquote = pairedTag "blockquote"
     
     /// <summary>
     /// Defines a single line break
     /// </summary>
-    let br = element "br"
+    let br = unpairedTag "br"
     
     /// <summary>
     /// Defines a clickable button
     /// </summary>
-    let button = element "button"
+    let button = pairedTag "button"
     
     /// <summary>
     /// Used to draw graphics, on the fly, via scripting (usually JavaScript)
     /// </summary>
-    let canvas = element "canvas"
+    let canvas = pairedTag "canvas"
     
     /// <summary>
     /// Defines a table caption
     /// </summary>
-    let caption = element "caption"
+    let caption = pairedTag "caption"
     
     /// <summary>
     /// Defines the title of a work
     /// </summary>
-    let cite = element "cite"
+    let cite = pairedTag "cite"
     
     /// <summary>
     /// Defines a piece of computer code
     /// </summary>
-    let code = element "code"
+    let code = pairedTag "code"
     
     /// <summary>
     /// Specifies column properties for each column within a <colgroup> element 
     /// </summary>
-    let col = element "col"
+    let col = pairedTag "col"
     
     /// <summary>
     /// Specifies a group of one or more columns in a table for formatting
     /// </summary>
-    let colgroup = element "colgroup"
+    let colgroup = pairedTag "colgroup"
     
     /// <summary>
     /// Specifies a list of pre-defined options for input controls
     /// </summary>
-    let datalist = element "datalist"
+    let datalist = pairedTag "datalist"
     
     /// <summary>
     /// Defines a description/value of a term in a description list
     /// </summary>
-    let dd = element "dd"
+    let dd = pairedTag "dd"
     
     /// <summary>
     /// Defines text that has been deleted from a document
     /// </summary>
-    let del = element "del"
+    let del = pairedTag "del"
     
     /// <summary>
     /// Defines additional details that the user can view or hide
     /// </summary>
-    let details = element "details"
+    let details = pairedTag "details"
     
     /// <summary>
     /// Represents the defining instance of a term
     /// </summary>
-    let dfn = element "dfn"
+    let dfn = pairedTag "dfn"
     
     /// <summary>
     /// Defines a dialog box or window
     /// </summary>
-    let dialog = element "dialog"
+    let dialog = pairedTag "dialog"
     
     /// <summary>
     /// Defines a section in a document
     /// </summary>
-    let div = element "div"
+    let div = pairedTag "div"
     
     /// <summary>
     /// Defines a description list
     /// </summary>
-    let dl = element "dl"
+    let dl = pairedTag "dl"
     
     /// <summary>
     /// Defines a term/name in a description list
     /// </summary>
-    let dt = element "dt"
+    let dt = pairedTag "dt"
     
     /// <summary>
     /// Defines emphasized text 
     /// </summary>
-    let em = element "em"
+    let em = pairedTag "em"
     
     /// <summary>
     /// Defines a container for an external (non-HTML) application
     /// </summary>
-    let embed = element "embed"
+    let embed = pairedTag "embed"
     
     /// <summary>
     /// Groups related elements in a form
     /// </summary>
-    let fieldset = element "fieldset"
+    let fieldset = pairedTag "fieldset"
     
     /// <summary>
     /// Defines a caption for a <figure> element
     /// </summary>
-    let figcaption = element "figcaption"
+    let figcaption = pairedTag "figcaption"
     
     /// <summary>
     /// Specifies self-contained content
     /// </summary>
-    let figure = element "figure"
+    let figure = pairedTag "figure"
     
     /// <summary>
     /// Defines a footer for a document or section
     /// </summary>
-    let footer = element "footer"
+    let footer = pairedTag "footer"
     
     /// <summary>
     /// Defines an HTML form for user input
     /// </summary>
-    let form = element "form"
+    let form = pairedTag "form"
     
     /// <summary>
     /// Defines a header for a document or section
     /// </summary>
-    let header = element "header"
+    let header = pairedTag "header"
     
     /// <summary>
     ///  Defines a thematic change in the content
     /// </summary>
-    let hr = element "hr"
+    let hr = unpairedTag "hr"
     
     /// <summary>
     /// Defines a part of text in an alternate voice or mood
     /// </summary>
-    let i = element "i"
+    let i = pairedTag "i"
     
     /// <summary>
     /// Defines an inline frame
     /// </summary>
-    let iframe = element "iframe"
+    let iframe = pairedTag "iframe"
     
     /// <summary>
     /// Defines an image
     /// </summary>
-    let img = element "img"
+    let img = pairedTag "img"
     
     /// <summary>
     /// Defines an input control
     /// </summary>
-    let input = element "input"
+    let input = unpairedTag "input"
     
     /// <summary>
     /// Defines a text that has been inserted into a document
     /// </summary>
-    let ins = element "ins"
+    let ins = pairedTag "ins"
     
     /// <summary>
     /// Defines keyboard input
     /// </summary>
-    let kbd = element "kbd"
+    let kbd = pairedTag "kbd"
     
     /// <summary>
     /// Defines a key-pair generator field (for forms)
     /// </summary>
-    let keygen = element "keygen"
+    let keygen = pairedTag "keygen"
     
     /// <summary>
     /// Defines a label for an <input> element
     /// </summary>
-    let label = element "label"
+    let label = pairedTag "label"
     
     /// <summary>
     /// Defines a caption for a <fieldset> element
     /// </summary>
-    let legend = element "legend"
+    let legend = pairedTag "legend"
     
     /// <summary>
     /// Defines a list item
     /// </summary>
-    let li = element "li"
+    let li = pairedTag "li"
     
     /// <summary>
     /// Defines the relationship between a document and an external resource (most 
     /// used to link to style sheets)
     /// </summary>
-    let link = element "link"
+    let link = unpairedTag "link"
     
     /// <summary>
     /// Specifies the main content of a document
     /// </summary>
-    let main = element "main"
+    let main = pairedTag "main"
     
     /// <summary>
     /// Defines a client-side image-map
     /// </summary>
-    let map = element "map"
+    let map = pairedTag "map"
     
     /// <summary>
     /// Defines marked/highlighted text
     /// </summary>
-    let mark = element "mark"
+    let mark = pairedTag "mark"
     
     /// <summary>
     /// Defines a list/menu of commands
     /// </summary>
-    let menu = element "menu"
+    let menu = pairedTag "menu"
     
     /// <summary>
     /// Defines a command/menu item that the user can invoke from a popup menu
     /// </summary>
-    let menuitem = element "menuitem"
+    let menuitem = pairedTag "menuitem"
     
     /// <summary>
     /// Defines metadata about an HTML document
     /// </summary>
-    let meta = element "meta"
+    let meta = unpairedTag "meta"
     
     /// <summary>
     /// Defines a scalar measurement within a known range (a gauge)
     /// </summary>
-    let meter = element "meter"
+    let meter = pairedTag "meter"
     
     /// <summary>
     /// Defines navigation links
     /// </summary>
-    let nav = element "nav"
+    let nav = pairedTag "nav"
     
     /// <summary>
     /// Defines an alternate content for users that do not support 
     /// client-side scripts
     /// </summary>
-    let noscript = element "noscript"
+    let noscript = pairedTag "noscript"
     
     /// <summary>
     /// Defines an embedded object
     /// </summary>
-    let object' = element "object"
+    let object' = pairedTag "object"
     
     /// <summary>
     /// Defines an ordered list
     /// </summary>
-    let ol = element "ol"
+    let ol = pairedTag "ol"
     
     /// <summary>
     /// Defines a group of related options in a drop-down list
     /// </summary>
-    let optgroup = element "optgroup"
+    let optgroup = pairedTag "optgroup"
     
     /// <summary>
     /// Defines an option in a drop-down list
     /// </summary>
-    let option = element "option"
+    let option = pairedTag "option"
     
     /// <summary>
     /// Defines the result of a calculation
     /// </summary>
-    let output = element "output"
+    let output = pairedTag "output"
     
     /// <summary>
     /// Defines a paragraph
     /// </summary>
-    let p = element "p"
+    let p = pairedTag "p"
     
     /// <summary>
     /// Defines a parameter for an object
     /// </summary>
-    let param = element "param"
+    let param = pairedTag "param"
     
     /// <summary>
     /// Defines a container for multiple image resources
     /// </summary>
-    let picture = element "picture"
+    let picture = pairedTag "picture"
     
     /// <summary>
     /// Defines preformatted text
     /// </summary>
-    let pre = element "pre"
+    let pre = pairedTag "pre"
     
     /// <summary>
     /// Represents the progress of a task
     /// </summary>
-    let progress = element "progress"
+    let progress = pairedTag "progress"
     
     /// <summary>
     /// Defines a short quotation
     /// </summary>
-    let q = element "q"
+    let q = pairedTag "q"
     
     /// <summary>
     /// Defines what to show in browsers that do not support ruby annotations
     /// </summary>
-    let rp = element "rp"
+    let rp = pairedTag "rp"
     
     /// <summary>
     /// Defines an explanation/pronunciation of characters (for East Asian typography)
     /// </summary>
-    let rt = element "rt"
+    let rt = pairedTag "rt"
     
     /// <summary>
     /// Defines a ruby annotation (for East Asian typography)
     /// </summary>
-    let ruby = element "ruby"
+    let ruby = pairedTag "ruby"
     
     /// <summary>
     /// Defines text that is no longer correct
     /// </summary>
-    let s = element "s"
+    let s = pairedTag "s"
     
     /// <summary>
     /// Defines sample output from a computer program
     /// </summary>
-    let samp = element "samp"
+    let samp = pairedTag "samp"
     
     /// <summary>
     /// Defines a section in a document
     /// </summary>
-    let section = element "section"
+    let section = pairedTag "section"
     
     /// <summary>
     /// Defines a drop-down list
     /// </summary>
-    let select = element "select"
+    let select = pairedTag "select"
     
     /// <summary>
     /// Defines smaller text
     /// </summary>
-    let small = element "small"
+    let small = pairedTag "small"
     
     /// <summary>
     /// Defines multiple media resources for media elements (<video> and <audio>)
     /// </summary>
-    let source = element "source"
+    let source = pairedTag "source"
     
     /// <summary>
     /// Defines a section in a document
     /// </summary>
-    let span = element "span"
+    let span = pairedTag "span"
     
     /// <summary>
     /// Defines important text
     /// </summary>
-    let strong = element "strong"
+    let strong = pairedTag "strong"
     
     /// <summary>
     /// Defines style information for a document
     /// </summary>
-    let style = element "style"
+    let style = pairedTag "style"
     
     /// <summary>
     /// Defines subscripted text
     /// </summary>
-    let sub = element "sub"
+    let sub = pairedTag "sub"
     
     /// <summary>
     /// Defines a visible heading for a <details> element
     /// </summary>
-    let summary = element "summary"
+    let summary = pairedTag "summary"
     
     /// <summary>
     /// Defines superscripted text
     /// </summary>
-    let sup = element "sup"
+    let sup = pairedTag "sup"
     
     /// <summary>
     /// Defines a table
     /// </summary>
-    let table = element "table"
+    let table = pairedTag "table"
     
     /// <summary>
     /// Groups the body content in a table
     /// </summary>
-    let tbody = element "tbody"
+    let tbody = pairedTag "tbody"
     
     /// <summary>
     /// Defines a cell in a table
     /// </summary>
-    let td = element "td"
+    let td = pairedTag "td"
     
     /// <summary>
     /// Defines a multiline input control (text area)
     /// </summary>
-    let textarea = element "textarea"
+    let textarea = pairedTag "textarea"
     
     /// <summary>
     /// Groups the footer content in a table
     /// </summary>
-    let tfoot = element "tfoot"
+    let tfoot = pairedTag "tfoot"
     
     /// <summary>
     /// Defines a header cell in a table
     /// </summary>
-    let th = element "th"
+    let th = pairedTag "th"
     
     /// <summary>
     /// Groups the header content in a table
     /// </summary>
-    let thead = element "thead"
+    let thead = pairedTag "thead"
     
     /// <summary>
     /// Defines a date/time
     /// </summary>
-    let time = element "time"
+    let time = pairedTag "time"
     
     /// <summary>
     /// Defines a title for the document
     /// </summary>
-    let title = element "title"
+    let title = pairedTag "title"
     
     /// <summary>
     /// Defines a row in a table
     /// </summary>
-    let tr = element "tr"
+    let tr = pairedTag "tr"
     
     /// <summary>
     /// Defines text tracks for media elements (<video> and <audio>)
     /// </summary>
-    let track = element "track"
+    let track = pairedTag "track"
     
     /// <summary>
     /// Defines text that should be stylistically different from normal text
     /// </summary>
-    let u = element "u"
+    let u = pairedTag "u"
     
     /// <summary>
     /// Defines an unordered list
     /// </summary>
-    let ul = element "ul"
+    let ul = pairedTag "ul"
     
     /// <summary>
     /// Defines a variable
     /// </summary>
-    let var = element "var"
+    let var = pairedTag "var"
     
     /// <summary>
     /// Defines a video or movie
     /// </summary>
-    let video = element "video"
+    let video = pairedTag "video"
     
     /// <summary>
     /// Defines a possible line-break
     /// </summary>
-    let wbr = element "wbr"
+    let wbr = pairedTag "wbr"
     
     /// <summary>
     /// Simple text node
     /// </summary>
     let text = Element.Text
     
-    let private head = element "head"
-    let private body = element "body"    
+    let private head = pairedTag "head"
+    let private body = pairedTag "body"    
     let html head_ body_ = 
-        element "html" [] [head [] head_; body [] body_]
+        pairedTag "html" [] [head [] head_; body [] body_]
 
     /// <summary>
     /// Specifies one or more classnames for an element
@@ -542,10 +543,10 @@ module Html =
         attr ("on" + event)
 
     let stylesheet path = 
-        element "link" [Attr("rel", "stylesheet"); (href path)] []
+        pairedTag "link" [Attr("rel", "stylesheet"); (href path)] []
 
     let script path = 
-        element "script" [(src path)] []
+        pairedTag "script" [(src path)] []
 
     // marker attribute
     type Render() =
