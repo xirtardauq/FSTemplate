@@ -3,7 +3,7 @@
 open System
 open System.Reflection
 open FSTemplate
-open Microsoft.FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.SourceCodeServices
 
 let createCompilerOptions path = [| 
         "fsc.exe"; 
